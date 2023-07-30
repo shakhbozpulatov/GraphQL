@@ -1,0 +1,67 @@
+type Query {
+  rooms(input: QueryRoomsInput): RoomsList!
+  room(id: ID!): Room!
+}
+
+type Mutation {
+  createRoom(input: CreateRoomInput!): Room!
+  updateRoom(id: ID!, input: UpdateRoomInput!): Room!
+  removeRoom(id: ID!): Room!
+}
+
+type Room {
+  id: ID!
+  room_name: String!
+  floor: Int!
+  for_stuff: Boolean!
+}
+
+type RoomsList {
+  list: [Room!]!
+  offset: Int!
+  limit: Int!
+  total: Int!
+}
+
+enum SortByRoom {
+  ID
+  FLOOR
+}
+
+enum SortOrder {
+  ASC
+  DESC
+}
+
+input CreateRoomInput {
+  room_name: String!
+  floor: Int!
+  for_stuff: Boolean!
+}
+
+input UpdateRoomInput {
+  room_name: String
+  floor: Int
+  for_stuff: Boolean
+}
+
+input QueryRoomsInput {
+  q: String
+  filters: FilterRoomsInput
+  sort: SortRoomsInput
+}
+
+input FilterRoomsInput {
+  floor: Int
+  for_stuff: Boolean
+}
+
+input SortRoomsInput {
+  by: SortRoomBy!
+  order: SortOrder!
+}
+
+input Pagination {
+  offset: Int!
+  limit: Int!
+}
